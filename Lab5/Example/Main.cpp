@@ -1,21 +1,19 @@
 ﻿#include "Polynomials.h"
-#include "UnorderedTable.h"
-#include "OrderedTable.h"
-#include "HashTable.h"
+#include "LogTables.h"
 
 int main()
 {
-	HTable <NamedPolynom> a;
+	LogTables <NamedPolynom> a;
 	vector<pair<double, int>> v;
 	v.push_back(make_pair(1.0, 101));
 	v.push_back(make_pair(2.0, 1));
 	v.push_back(make_pair(4.0, 12));
 	NamedPolynom b(v, "B");	
 	a.ins(b.getname(), b);
-	NamedPolynom *t = a.find("A");
+	NamedPolynom *t = a.find("B");
 	if (t)
 	{
-		cout << *t;
+		cout << *t << endl;
 	}
 
 

@@ -15,9 +15,9 @@ public:
 	Table() {}
 	virtual ~Table() {}
 	int getsize() const { return cur_size; }
-	virtual void ins(const T1& key, const T2& data) = 0;
-	virtual void del(const T1& key) = 0;
-	virtual T2* find(const T1& key) = 0;
+	virtual void ins(const T1& key, const T2& data, int *op = NULL) = 0;
+	virtual void del(const T1& key, int *op = NULL) = 0;
+	virtual T2* find(const T1& key, int *op = NULL) = 0;
 };
 
 #endif

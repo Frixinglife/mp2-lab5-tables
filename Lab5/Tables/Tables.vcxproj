@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="LogTables.h" />
     <ClInclude Include="OrderedTable.h" />
     <ClInclude Include="Tables.h" />
     <ClInclude Include="UnorderedTable.h" />

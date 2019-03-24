@@ -12,9 +12,9 @@ private:
 public:
 	UTable();
 	~UTable() {}
-	void ins(const T1& key, const T2& data) override;
-	void del(const T1& key) override;
-	T2* find(const T1& key) override;
+	void ins(const T1& key, const T2& data, int *op = NULL) override;
+	void del(const T1& key, int *op = NULL) override;
+	T2* find(const T1& key, int *op = NULL) override;
 };
 
 template <class T1, class T2>
@@ -29,17 +29,24 @@ UTable<T1, T2>::UTable()
 }
 
 template <class T1, class T2>
-void UTable<T1, T2>::ins(const T1& key, const T2& data)
+void UTable<T1, T2>::ins(const T1& key, const T2& data, int *op)
 {
 	T2 *temp = new T2(data);
 	cur_size++;
 	int i;
+	int c = 2;
 	for (i = 0; i < size; i++)
 	{
+		c++;
 		if (check[i] == false)
 		{
 			v[i] = make_pair(key, temp);
 			check[i] = true;
+			c += 3;
+			if (op)
+			{
+				*op = c;
+			}
 			return;
 		}
 	}
@@ -48,32 +55,59 @@ void UTable<T1, T2>::ins(const T1& key, const T2& data)
 	v.resize(size);
 	v[i] = make_pair(key, temp);
 	check[i] = true;
+	c += 2 * size + 3;
+	if (op)
+	{
+		*op = c;
+	}
 }
 
 template <class T1, class T2>
-void UTable<T1, T2>::del(const T1& key)
+void UTable<T1, T2>::del(const T1& key, int *op)
 {
+	int c = 0;
 	for (int i = 0; i < size; i++)
 	{
+		c++;
 		if (v[i].first == key)
 		{
 			cur_size--;
 			check[i] = false;
 			delete v[i].second;
+			c += 4;
+			if (op)
+			{
+				*op = c;
+			}
 			return;
 		}
+	}
+	if (op)
+	{
+		*op = c;
 	}
 }
 
 template <class T1, class T2>
-T2* UTable<T1, T2>::find(const T1& key)
+T2* UTable<T1, T2>::find(const T1& key, int *op)
 {
+	int c = 0;
 	for (int i = 0; i < size; i++)
 	{
+		c++;
 		if (v[i].first == key && check[i] == true)
 		{
+			c += 2;
+			if (op)
+			{
+				*op = c;
+			}
 			return v[i].second;
 		}
+	}
+	if (op)
+	{
+		*op = c;
 	}
 	return NULL;
 }

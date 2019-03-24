@@ -10,13 +10,13 @@ class OTable : public Table<T1, T2>
 private:
 	vector<pair<T1, T2*>> v;
 	bool comp(const T1& a, const T1& b);
-	int bin_find(const T1& key);
+	int bin_find(const T1& key, int *op = NULL);
 public:
 	OTable();
 	~OTable() {}
-	void ins(const T1& key, const T2& data) override;
-	void del(const T1& key) override;
-	T2* find(const T1& key) override;
+	void ins(const T1& key, const T2& data, int *op = NULL) override;
+	void del(const T1& key, int *op = NULL) override;
+	T2* find(const T1& key, int *op = NULL) override;
 };
 
 template <class T1, class T2>
@@ -36,79 +36,128 @@ OTable<T1, T2>::OTable()
 }
 
 template <class T1, class T2>
-int OTable<T1, T2>::bin_find(const T1& key)
+int OTable<T1, T2>::bin_find(const T1& key, int *op)
 {
+	int c = 0;
 	if (v.empty())
 	{
+		c++;
+		if (op)
+		{
+			*op = c;
+		}
 		return -1;
 	}
 	int mid = 0, left = 0, right = size - 1;
+	c += 3;
 	while (true)
 	{
 		mid = (left + right) / 2;
+		c += 2;
 		if (comp(key, v[mid].first))
 		{
 			right = mid - 1;
+			c += 2;
 		}
 		else if (comp(v[mid].first, key))
 		{
 			left = mid + 1;
+			c += 2;
 		}
 		else
 		{
+			if (op)
+			{
+				*op = c;
+			}
 			return mid;
 		}
 		if (left > right)
 		{
+			c++;
+			if (op)
+			{
+				*op = c;
+			}
 			return -1;
 		}
 	}
 }
 
 template <class T1, class T2>
-void OTable<T1, T2>::ins(const T1& key, const T2& data)
+void OTable<T1, T2>::ins(const T1& key, const T2& data, int *op)
 {
 	T2 *temp = new T2(data);
 	cur_size++;
+	int c = 2;
 	if (size == 0)
 	{
 		v.push_back(make_pair(key, temp));
 		size++;
+		c += 2;
+		if (op)
+		{
+			*op = c;
+		}
 		return;
 	}
 	else
 	{
 		for (int i = 0; i < size; i++)
 		{
+			c++;
 			if (comp(key, v[i].first))
 			{
 				v.insert(v.begin() + i, make_pair(key, temp));
 				size++;
+				c += 2 + (size - i);
+				if (op)
+				{
+					*op = c;
+				}
 				return;
 			}
 		}
 		v.push_back(make_pair(key, temp));
 		size++;
+		c += 2;
+		if (op)
+		{
+			*op = c;
+		}
 	}
 }
 
 template <class T1, class T2>
-void OTable<T1, T2>::del(const T1& key)
+void OTable<T1, T2>::del(const T1& key, int *op)
 {
-	int ind = bin_find(key);
+	int c = 0;
+	int *o = &c;
+	int ind = bin_find(key, o);
 	if (ind != -1)
 	{
 		delete v[ind].second;
 		v.erase(v.begin() + ind);
 		cur_size--;
 		size--;
+		c += 4 + (size - ind);
+	}
+	if (op)
+	{
+		*op = c;
 	}
 }
 
 template <class T1, class T2>
-T2* OTable<T1, T2>::find(const T1& key)
+T2* OTable<T1, T2>::find(const T1& key, int *op)
 {
-	int ind = bin_find(key);
+	int c = 0;
+	int *o = &c;
+	int ind = bin_find(key, o);
+	if (op)
+	{
+		*op = c;
+	}
 	if (ind == -1)
 	{
 		return NULL;
@@ -125,13 +174,13 @@ class OTable<string, T> : public Table<string, T>
 private:
 	vector<pair<string, T*>> v;
 	bool comp(const string& a, const string& b);
-	int bin_find(const string& key);
+	int bin_find(const string& key, int *op = NULL);
 public:
 	OTable();
 	~OTable() {}
-	void ins(const string& key, const T& data) override;
-	void del(const string& key) override;
-	T* find(const string& key) override;
+	void ins(const string& key, const T& data, int *op = NULL) override;
+	void del(const string& key, int *op = NULL) override;
+	T* find(const string& key, int *op = NULL) override;
 };
 
 template <class T>
@@ -163,79 +212,128 @@ OTable<string, T>::OTable()
 }
 
 template <class T>
-int OTable<string, T>::bin_find(const string& key)
+int OTable<string, T>::bin_find(const string& key, int *op)
 {
+	int c = 0;
 	if (v.empty())
 	{
+		c++;
+		if (op)
+		{
+			*op = c;
+		}
 		return -1;
 	}
 	int mid = 0, left = 0, right = size - 1;
+	c += 3;
 	while (true)
 	{
 		mid = (left + right) / 2;
+		c += 2;
 		if (comp(key, v[mid].first))
 		{
 			right = mid - 1;
+			c += 2;
 		}
 		else if (comp(v[mid].first, key))
 		{
 			left = mid + 1;
+			c += 2;
 		}
 		else
 		{
+			if (op)
+			{
+				*op = c;
+			}
 			return mid;
 		}
 		if (left > right)
 		{
+			c++;
+			if (op)
+			{
+				*op = c;
+			}
 			return -1;
 		}
 	}
 }
 
 template <class T>
-void OTable<string, T>::ins(const string& key, const T& data)
+void OTable<string, T>::ins(const string& key, const T& data, int *op)
 {
 	T *temp = new T(data);
 	cur_size++;
+	int c = 2;
 	if (size == 0)
 	{
 		v.push_back(make_pair(key, temp));
 		size++;
+		c += 2;
+		if (op)
+		{
+			*op = c;
+		}
 		return;
 	}
 	else
 	{
 		for (int i = 0; i < size; i++)
 		{
+			c++;
 			if (comp(key, v[i].first))
 			{
 				v.insert(v.begin() + i, make_pair(key, temp));
 				size++;
+				c += 2 + (size - i);
+				if (op)
+				{
+					*op = c;
+				}
 				return;
 			}
 		}
 		v.push_back(make_pair(key, temp));
 		size++;
+		c += 2;
+		if (op)
+		{
+			*op = c;
+		}
 	}
 }
 
 template <class T>
-void OTable<string, T>::del(const string& key)
+void OTable<string, T>::del(const string& key, int *op)
 {
-	int ind = bin_find(key);
+	int c = 0;
+	int *o = &c;
+	int ind = bin_find(key, o);
 	if (ind != -1)
 	{
 		delete v[ind].second;
 		v.erase(v.begin() + ind);
 		cur_size--;
 		size--;
+		c += 4 + (size - ind);
+	}
+	if (op)
+	{
+		*op = c;
 	}
 }
 
 template <class T>
-T* OTable<string, T>::find(const string& key)
+T* OTable<string, T>::find(const string& key, int *op)
 {
-	int ind = bin_find(key);
+	int c = 0;
+	int *o = &c;
+	int ind = bin_find(key, o);
+	if (op)
+	{
+		*op = c;
+	}
 	if (ind == -1)
 	{
 		return NULL;

@@ -1,4 +1,4 @@
-#ifndef _TABLES_H_
+﻿#ifndef _TABLES_H_
 #define _TABLES_H_
 
 #include <vector>

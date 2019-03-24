@@ -1,4 +1,4 @@
-#include "HashTable.h"
+﻿#include "HashTable.h"
 #include "Polynomials.h"
 #include "gtest.h"
 

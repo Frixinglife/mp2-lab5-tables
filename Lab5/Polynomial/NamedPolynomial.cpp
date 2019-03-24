@@ -1,4 +1,4 @@
-#include "Polynomials.h"
+п»ї#include "Polynomials.h"
 
 NamedPolynom::NamedPolynom(const string &s): Polynom()
 {
@@ -20,6 +20,12 @@ NamedPolynom& NamedPolynom::operator=(const NamedPolynom &p)
 	Polynom::operator=(p);
 	name = p.name;
 	return *this;
+}
+
+NamedPolynom::NamedPolynom(const Polynom &p)
+{
+	Polynom::operator=(p);
+	name = "Nameless";
 }
 
 string NamedPolynom::getname()
@@ -79,10 +85,10 @@ ostream& operator << (std::ostream& os, const NamedPolynom& object)
 istream& operator >> (std::istream& is, NamedPolynom& object)
 {
 	setlocale(LC_ALL, "Russian");
-	cout << "Введите название полинома: ";
+	cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РїРѕР»РёРЅРѕРјР°: ";
 	cin >> object.name;
 	cout << endl;
-	cout << "Введите количество мономов: ";
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РјРѕРЅРѕРјРѕРІ: ";
 	int k;
 	is >> k;
 	cout << endl;
@@ -93,27 +99,27 @@ istream& operator >> (std::istream& is, NamedPolynom& object)
 		pair<double, int> temp;
 		double coef;
 		int x, y, z;
-		cout << "Моном " << i + 1 << "." << endl;
-		cout << "Введите коэффициент: ";
+		cout << "РњРѕРЅРѕРј " << i + 1 << "." << endl;
+		cout << "Р’РІРµРґРёС‚Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚: ";
 		is >> coef;
 		temp.first = coef;
-		cout << "Введите степень х: ";
+		cout << "Р’РІРµРґРёС‚Рµ СЃС‚РµРїРµРЅСЊ С…: ";
 		is >> x;
 		if (x < 0 || x > 9)
 		{
-			throw (string)"Некорректная степень х";
+			throw (string)"РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚РµРїРµРЅСЊ С…";
 		}
-		cout << "Введите степень y: ";
+		cout << "Р’РІРµРґРёС‚Рµ СЃС‚РµРїРµРЅСЊ y: ";
 		is >> y;
 		if (y < 0 || y > 9)
 		{
-			throw (string)"Некорректная степень y";
+			throw (string)"РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚РµРїРµРЅСЊ y";
 		}
-		cout << "Введите степень z: ";
+		cout << "Р’РІРµРґРёС‚Рµ СЃС‚РµРїРµРЅСЊ z: ";
 		is >> z;
 		if (z < 0 || z > 9)
 		{
-			throw (string)"Некорректная степень z";
+			throw (string)"РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚РµРїРµРЅСЊ z";
 		}
 		temp.second = x * 100 + y * 10 + z;
 		cout << endl;

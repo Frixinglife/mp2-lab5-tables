@@ -1,4 +1,4 @@
-#ifndef _POLYNOMIAL_H_
+﻿#ifndef _POLYNOMIAL_H_
 #define _POLYNOMIAL_H_
 
 #include <fstream>
@@ -60,6 +60,8 @@ public:
 	NamedPolynom(const NamedPolynom &p);
 	NamedPolynom(const vector <pair<double, int>> &p, const string &s = "Nameless");
 	~NamedPolynom() {}
+
+	NamedPolynom(const Polynom &p);
 
 	NamedPolynom& operator=(const NamedPolynom &p);
 	string getname();

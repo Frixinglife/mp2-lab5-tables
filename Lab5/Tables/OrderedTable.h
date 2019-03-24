@@ -1,4 +1,4 @@
-#ifndef _ORDERED_TABLE_H_
+﻿#ifndef _ORDERED_TABLE_H_
 #define _ORDERED_TABLE_H_
 
 #include "Tables.h"

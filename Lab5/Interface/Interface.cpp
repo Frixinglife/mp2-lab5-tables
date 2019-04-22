@@ -50,6 +50,7 @@ void OperationsWithTableOrPolynoms(LogTables<NamedPolynom> &t)
 		{
 			cout << endl << "В таблице не хватает полиномов. Выберите другой пункт меню. " << endl;
 			OperationsWithTableOrPolynoms(t);
+			return;
 		}
 		SelectPolynoms(t);
 		return;
@@ -58,6 +59,7 @@ void OperationsWithTableOrPolynoms(LogTables<NamedPolynom> &t)
 	default:
 		cout << endl << "Такой пункт отсутствует. Повторите ввод." << endl;
 		OperationsWithTableOrPolynoms(t);
+		return;
 	}
 }
 
@@ -93,6 +95,7 @@ void OperationСhoice(LogTables<NamedPolynom> &t)
 	default:
 		cout << endl << "Такой пункт отсутствует. Повторите ввод." << endl;
 		OperationСhoice(t);
+		return;
 	}
 }
 
@@ -168,12 +171,14 @@ void OperationsWithPolynoms(LogTables<NamedPolynom> &t, NamedPolynom a, NamedPol
 		default:
 			cout << endl << "Такой пункт отсутствует. Повторите ввод." << endl;
 			OperationsWithPolynoms(t, a, b);
+			return;
 		}
 	}
 	catch (string str)
 	{
 		cout << endl << "Произошло переполнение при умножении. Выберите другую операцию. " << endl << endl;
 		OperationsWithPolynoms(t, a, b);
+		return;
 	}
 	
 	SetNameResult(t, c);
@@ -191,6 +196,7 @@ void SetNameResult(LogTables<NamedPolynom> &t, NamedPolynom res)
 		{
 			cout << endl << "Полином с таким названием уже есть в таблице. Повторите ввод. " << endl << endl;
 			SetNameResult(t, res);
+			return;
 		}
 	}
 
@@ -228,6 +234,7 @@ void OperationWithResult(LogTables<NamedPolynom> &t, NamedPolynom res)
 	default:
 		cout << endl << "Такой пункт отсутствует. Повторите ввод." << endl;
 		OperationWithResult(t, res);
+		return;
 	}
 }
 
@@ -244,6 +251,7 @@ void AddPolynomToTable(LogTables<NamedPolynom> &t)
 	{
 		cout << endl << "Вы ввели некорректную степень полинома. Повторите ввод." << endl;
 		AddPolynomToTable(t);
+		return;
 	}
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -251,6 +259,7 @@ void AddPolynomToTable(LogTables<NamedPolynom> &t)
 		{
 			cout << endl << "Полином с таким названием уже есть в таблице. Повторите ввод. " << endl;
 			AddPolynomToTable(t);
+			return;
 		}
 	}
 	cout << "Получившийся полином: " << a << endl;
